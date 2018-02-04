@@ -17,6 +17,9 @@
 		<junit.jupiter.version>5.0.3</junit.jupiter.version>
 		<junit.vintage.version>${junit.version}.3</junit.vintage.version>
 		<junit.platform.version>1.0.3</junit.platform.version>
+		<maven.compiler.version>3.7.0</maven.compiler.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -61,4 +64,18 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.version}</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
