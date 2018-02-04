@@ -1,7 +1,6 @@
 package es.sergiorb.java;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -27,25 +26,25 @@ public abstract class Jutils {
 		return !Jutils.isEmpty(value);
 	}
 
-	public static <E> boolean isCollectionWithContent(Collection<E> collection) {
+	public static <T> boolean isCollectionWithContent(Collection<T> collection) {
 
 		return collection != null && !collection.isEmpty();
 	}
 
-	public static <E> boolean isCollectionNullOrVoid(Collection<E> collection) {
+	public static <T> boolean isCollectionNullOrVoid(Collection<T> collection) {
 
 		return collection == null || collection.isEmpty();
 	}
 
 	@SafeVarargs
-	public static <E> boolean allCollectionsWithContent(Collection<E> ...collections) {
+	public static <T> boolean allCollectionsWithContent(Collection<T> ...collections) {
 		
 		if (collections == null) {
 		
 			return false;
 		}
 	
-		for (Collection<E> collection : collections) {
+		for (Collection<T> collection : collections) {
 			
 			if (Jutils.isCollectionNullOrVoid(collection)) {
 				
@@ -57,14 +56,14 @@ public abstract class Jutils {
 	}
 	
 	@SafeVarargs
-	public static <E> boolean allCollectionsNullOrVoid(Collection<E> ...collections) {
+	public static <T> boolean allCollectionsNullOrVoid(Collection<T> ...collections) {
 		
 		if (collections == null) {
 			
 			return true;
 		}
 	
-		for (Collection<E> collection : collections) {
+		for (Collection<T> collection : collections) {
 			
 			if (Jutils.isCollectionWithContent(collection)) {
 				
@@ -76,13 +75,8 @@ public abstract class Jutils {
 	}
 	
 	public static boolean isMail(String value) {
-		
-		if (value == null) {
-			
-			return false;
-		}
 
-		return emailPatternRFC2822.matcher(value).find();
+		return (value == null) ? false : emailPatternRFC2822.matcher(value).find();
 	}
 
 	public static <T> Integer[] listToIntegerArray(List<T> list) {
@@ -99,41 +93,5 @@ public abstract class Jutils {
 
 		return (Long[]) set.toArray(new Long[set.size()]);
 	}
-
-	public static <E> boolean valueExistInAllESets(Long value, List<Set<E>> setsList) {
-
-		int requiredOccurrences = setsList.size();
-
-		int occurrences = 0;
-
-		for (int i = 0; i < setsList.size(); i++) {
-
-			if (setsList.get(i).contains(value)) {
-
-				occurrences++;
-			}
-		}
-
-		return occurrences == requiredOccurrences;
-	}
-
-	public static Set<Long> getCommonLongValues(List<Set<Long>> setsList) {
-
-		Set<Long> commonValues = new HashSet<>();
-
-		setsList.stream().forEach(set -> {
-
-			set.stream().forEach(value -> {
-
-				if (Jutils.valueExistInAllESets(value, setsList)) {
-
-					commonValues.add(value);
-				}
-			});
-		});
-
-		return commonValues;
-	}
-
 
 }
